@@ -1,24 +1,22 @@
-import random
+import random, math
 
 if __name__ == '__main__':
+
     def mathOperations(number1, number2, operation):
         if operation == "+":
-            result = number1 + number2
+            return number1 + number2
 
         elif operation == "-":
-            result = number1 - number2
+            return number1 - number2
 
         elif operation == "*":
-            result = number1 * number2
+            return number1 * number2
 
         elif operation == "/":
-            result = number1 / number2
-
-        return result
-
-
-    def rounded(number):
-        return '{0:.2f}'.format(number)
+            if number1 == number2 or number1 == 1 or number2 == 1:
+                return round(math.floor((number1 / number2) * 100) / 100)
+            else:
+                return math.floor((number1 / number2) * 100) / 100
 
 
     def scoreMaster(state: bool, var):
@@ -43,18 +41,18 @@ if __name__ == '__main__':
     game = True  # Переменная контроля цикла
 
     while game:
-        number1 = random.randint(1, 10)
-        number2 = random.randint(1, 10)
-        operation = random.choice(operations)
-        right_answer = mathOperations(number1, number2, operation)
-        print(f"{number1} {operation} {number2} = ?")
+        rand_num1 = random.randint(1, 10)
+        rand_num2 = random.randint(1, 10)
+        rand_operation = random.choice(operations)
+        right_answer = str(mathOperations(rand_num1, rand_num2, rand_operation))
+        print(f"{rand_num1} {rand_operation} {rand_num2} = ?")
         user_answer = input('Твой ответ (q - для выхода): ')
         if user_answer == 'q':
             break
-        elif rounded(right_answer) == rounded(float(user_answer)):
+        elif right_answer == user_answer:
             score = scoreMaster(True, score)
             print(f"Правильно! У тебя {score} очков")
         else:
             score = scoreMaster(False, score)
-            print(f'Неправильно! {number1} {operation} {number2} = {rounded(right_answer)}. У тебя, {score} очков')
+            print(f'Неправильно! {rand_num1} {rand_operation} {rand_num2} = {right_answer}. У тебя, {score} очков')
             game = gameMaster(score)
